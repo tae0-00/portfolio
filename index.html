@@ -223,6 +223,10 @@
   .highlights li b{color:var(--ink);font-weight:700;border-bottom:2px solid var(--gold-soft);padding-bottom:1px;}
   .proj-stack{display:flex;flex-wrap:wrap;gap:8px;padding-top:22px;border-top:1px solid var(--line);}
   .proj-stack .chip{font-size:11.5px;padding:5px 11px;}
+  .proj-detail-link{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;color:var(--vermilion);text-decoration:none;border-bottom:1px solid transparent;transition:gap .25s,border-color .25s;}
+  .proj-detail-link:hover{gap:13px;border-color:var(--vermilion);}
+  .proj-detail-link .ar{transition:transform .25s;}
+  .proj-detail-link:hover .ar{transform:translateX(3px);}
 
   /* GIS band */
   .band{background:var(--forest);color:var(--cream);position:relative;overflow:hidden;}
@@ -454,6 +458,7 @@
             <span class="chip">MyBatis</span><span class="chip">MySQL (AWS RDS)</span><span class="chip">Kakao Maps API</span>
             <span class="chip">JWT / OAuth2</span>
           </div>
+          <a href="jeonbukro.html" class="proj-detail-link">페이지별 구현 상세 보기 <span class="ar">→</span></a>
         </div>
       </article>
 
@@ -555,7 +560,8 @@
       <p class="reveal">공간 데이터를 사람에게 닿는 서비스로 만드는 일에 관심이 있습니다. 편하게 연락 주세요.</p>
       <div class="links reveal">
         <a href="mailto:ingpitae0609@naver.com">✉ ingpitae0609@naver.com <span class="ar">↗</span></a>
-       <a href="https://github.com/tae0-00" target="_blank" rel="noopener"></a>⌥ GitHub <span class="ar">↗</span></a>
+        <a href="https://github.com/your-username" target="_blank" rel="noopener">⌥ GitHub <span class="ar">↗</span></a>
+        <a href="https://your-blog-url.com" target="_blank" rel="noopener">✎ Blog <span class="ar">↗</span></a>
       </div>
     </div>
   </section>
