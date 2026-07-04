@@ -170,12 +170,11 @@
       <p class="desc">단순히 관광지를 나열하는 기존 플랫폼과 달리, 전북의 문화유산을 '역사'라는 콘텐츠로 엮어 탐방 경험을 제공하는 웹 플랫폼. 행정경계 GeoJSON을 직접 지도로 가공하고, 공공 관광 API와 자체 제작 역사 코스를 분리·연동했습니다.</p>
       <div class="facts">
         <div class="fact"><div class="k">My Role</div><div class="v">메인 · 여행지(목록/상세) · 역사 코스 · 관리자 전체</div></div>
-        <div class="fact"><div class="k">Team</div><div class="v">팀 프로젝트 (공모전 출품)</div></div>
         <div class="fact"><div class="k">Period</div><div class="v">2026.04.21 — 06.02</div></div>
       </div>
       <div class="stack-row">
         <span class="chip">Spring Boot</span><span class="chip">Next.js</span><span class="chip">TypeScript</span>
-        <span class="chip">MyBatis</span><span class="chip">MySQL (AWS RDS)</span><span class="chip">Kakao Maps API</span>
+        <span class="chip">MyBatis</span><span class="chip">MySQL</span><span class="chip">Kakao Maps API</span>
         <span class="chip">TourAPI</span><span class="chip">JWT / OAuth2</span>
       </div>
     </div>
@@ -492,6 +491,9 @@
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // 이미지 로딩 후 앵커 위치 보정 (사진이 늦게 떠서 엉뚱한 곳으로 점프하는 문제 해결)
+  function scrollToHash(){if(location.hash){var el=document.querySelector(location.hash);if(el){el.scrollIntoView();}}}
+  if(location.hash){window.addEventListener('load',function(){setTimeout(scrollToHash,80);});}
 </script>
 </body>
 </html>

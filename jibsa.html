@@ -186,7 +186,6 @@
       <p class="desc">반려동물의 종류·연령 기반 맞춤 상품 추천과, 반려인 간 소통이 가능한 커뮤니티를 결합한 플랫폼. 사용자 관점에서 문제를 다시 정의하고, 확정된 DB 구조 변경까지 직접 책임진 첫 팀 프로젝트입니다.</p>
       <div class="facts">
         <div class="fact"><div class="k">My Role</div><div class="v">추천 로직 · 상품 페이지 · 커뮤니티 · 관리자(주문/취소·신고)</div></div>
-        <div class="fact"><div class="k">Team</div><div class="v">첫 팀 프로젝트</div></div>
         <div class="fact"><div class="k">Period</div><div class="v">2026.03.03 — 04.07</div></div>
       </div>
       <div class="stack-row">
@@ -468,6 +467,9 @@
   window.addEventListener('scroll',onScroll,{passive:true});onScroll();
   const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // 이미지 로딩 후 앵커 위치 보정 (사진이 늦게 떠서 엉뚱한 곳으로 점프하는 문제 해결)
+  function scrollToHash(){if(location.hash){var el=document.querySelector(location.hash);if(el){el.scrollIntoView();}}}
+  if(location.hash){window.addEventListener('load',function(){setTimeout(scrollToHash,80);});}
 </script>
 </body>
 </html>
