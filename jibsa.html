@@ -115,6 +115,45 @@
 
   footer.copy{padding:28px 0;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-soft);}
 
+  .erd-sec{padding:80px 0 20px;}
+  .erd-frame{border:1px solid var(--line-strong);border-radius:8px;overflow:hidden;background:#0E141A;cursor:zoom-in;position:relative;}
+  .erd-frame img{width:100%;display:block;transition:transform .3s;}
+  .erd-frame:hover img{transform:scale(1.02);}
+  .erd-frame .zoom{position:absolute;top:12px;right:14px;font-family:var(--mono);font-size:10.5px;color:var(--cream);background:rgba(20,48,42,.7);padding:4px 10px;border-radius:3px;letter-spacing:.04em;}
+  .erd-cap{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:12px;text-align:center;letter-spacing:.03em;}
+  .erd-lightbox{position:fixed;inset:0;z-index:200;background:rgba(14,20,26,.94);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out;}
+  .erd-lightbox.open{display:flex;}
+  .erd-lightbox img{max-width:100%;max-height:92vh;border-radius:6px;}
+  .erd-lightbox .lb-close{position:absolute;top:20px;right:26px;font-family:var(--mono);font-size:13px;color:var(--cream);}
+
+  .retro{padding:90px 0 20px;}
+  .retro-case{border:1px solid var(--line-strong);border-radius:8px;background:var(--cream);overflow:hidden;margin-bottom:20px;}
+  .rc-top{display:flex;align-items:center;gap:14px;padding:20px 26px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .rc-id{font-family:var(--mono);font-size:11px;color:var(--vermilion);letter-spacing:.05em;border:1px solid rgba(188,74,48,.3);padding:3px 9px;border-radius:3px;background:rgba(188,74,48,.06);}
+  .rc-name{font-family:var(--serif);font-size:1.2rem;font-weight:700;}
+  .rc-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+  @media(max-width:760px){.rc-grid{grid-template-columns:1fr;}}
+  .rc-col{padding:22px 26px;border-right:1px solid var(--line);}
+  .rc-col:last-child{border-right:none;}
+  @media(max-width:760px){.rc-col{border-right:none;border-bottom:1px solid var(--line);}.rc-col:last-child{border-bottom:none;}}
+  .rc-step{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .rc-step.problem{color:var(--vermilion);}.rc-step.cause{color:var(--gold);}.rc-step.fix{color:var(--teal);}
+  .rc-col p{font-size:.92rem;color:var(--ink-soft);line-height:1.65;}
+  .rc-col p b{color:var(--ink);font-weight:700;}
+  .rc-foot{padding:14px 26px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:7px;background:var(--paper-2);}
+  .rc-foot .tg{font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--line-strong);border-radius:2px;color:var(--ink);background:rgba(255,255,255,.3);}
+  /* before/after mini structure for ORDER_DETAIL */
+  .mini-diff{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin:8px 0 4px;}
+  @media(max-width:680px){.mini-diff{grid-template-columns:1fr;}}
+  .md-box{border:1px solid var(--line-strong);border-radius:6px;padding:16px;background:var(--paper);}
+  .md-box .mdl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
+  .md-box.before .mdl{color:var(--vermilion);}.md-box.after .mdl{color:var(--teal);}
+  .md-node{font-family:var(--mono);font-size:11.5px;padding:7px 10px;border:1px solid var(--line);border-radius:4px;margin-bottom:6px;display:flex;justify-content:space-between;background:var(--cream);}
+  .md-node.child{margin-left:14px;}
+  .md-node .cx{color:var(--vermilion);}.md-node .ok{color:var(--teal);}
+  .md-arrow{font-family:var(--serif);font-size:1.6rem;color:var(--gold);text-align:center;}
+  @media(max-width:680px){.md-arrow{transform:rotate(90deg);}}
+
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
   @media(prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none;}}
@@ -342,6 +381,62 @@
 
   </div>
 
+  <!-- ERD -->
+  <div class="container">
+    <section class="erd-sec">
+      <div class="group-head reveal">
+        <span class="group-num">DB</span>
+        <h2 class="group-title">데이터 구조 (ERD)</h2>
+        <span class="group-sub">// SCHEMA</span>
+      </div>
+      <div class="group-rule reveal"></div>
+      <div class="erd-frame reveal" onclick="openLB('erd-jibsa.png')">
+        <span class="zoom">클릭하면 확대 ⤢</span>
+        <img src="erd-jibsa.png" alt="집사상점 ERD" onerror="this.parentElement.style.display='none'">
+      </div>
+      <p class="erd-cap reveal">회원 · 상품 · 주문/주문상세 · 커뮤니티 · 신고 등으로 구성된 집사상점 전체 스키마</p>
+    </section>
+  </div>
+
+  <!-- RETRO / 문제 해결 -->
+  <div class="container">
+    <section id="retro" class="retro">
+      <div class="group-head reveal">
+        <span class="group-num">★</span>
+        <h2 class="group-title">문제 해결 기록</h2>
+        <span class="group-sub">// 문제 → 원인 → 해결</span>
+      </div>
+      <div class="group-rule reveal"></div>
+
+      <article class="retro-case reveal">
+        <div class="rc-top"><span class="rc-id">CASE 01 · 핵심</span><span class="rc-name">주문 부분취소 — ORDER_DETAIL 구조 재설계</span></div>
+        <div class="rc-grid">
+          <div class="rc-col"><div class="rc-step problem">● 문제</div><p>주문 취소가 <b>주문 전체 단위로만</b> 가능해, 한 주문에 담긴 여러 상품 중 일부만 취소할 방법이 없었습니다. 사용자 관점에서 명백한 불편이었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step cause">▲ 원인</div><p>취소 상태를 <b>주문 단위로만 관리</b>해, 상품별 상태를 담을 구조 자체가 없었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step fix">✓ 해결</div><p>ORDER_DETAIL에 <b>상품별 상태 컬럼을 추가</b>하고, 마이페이지·관리자·배송비 귀책 로직을 전면 재구현해 데이터 정합성을 확보했습니다.</p></div>
+        </div>
+        <div style="padding:22px 26px;border-top:1px solid var(--line);">
+          <div class="mini-diff">
+            <div class="md-box before">
+              <div class="mdl">Before · 주문 단위</div>
+              <div class="md-node"><span>ORDER #1024</span><span class="cx">CANCELLED</span></div>
+              <div style="font-family:var(--mono);font-size:10.5px;color:var(--vermilion);margin-top:4px;">↳ 일부만 취소 불가 — 전부 취소됨</div>
+            </div>
+            <div class="md-arrow">→</div>
+            <div class="md-box after">
+              <div class="mdl">After · 상품 단위</div>
+              <div class="md-node"><span>ORDER #1024</span><span class="ok">ACTIVE</span></div>
+              <div class="md-node child"><span>사료</span><span class="ok">ORDERED</span></div>
+              <div class="md-node child"><span>장난감</span><span class="cx">CANCELLED</span></div>
+              <div style="font-family:var(--mono);font-size:10.5px;color:var(--teal);margin-top:4px;">↳ 상품별 상태 관리 → 정합성 확보</div>
+            </div>
+          </div>
+        </div>
+        <div class="rc-foot"><span class="tg">스키마 재설계</span><span class="tg">상태 동적 계산(CASE)</span><span class="tg">배송비 귀책 분기</span><span class="tg">데이터 정합성</span></div>
+      </article>
+    </section>
+  </div>
+
   <!-- FOOTER NAV -->
   <section class="pfoot">
     <svg class="contour" viewBox="0 0 400 400" fill="none" aria-hidden="true">
@@ -360,6 +455,13 @@
 
 </div>
 
+<div class="erd-lightbox" id="lb" onclick="closeLB()"><span class="lb-close mono">닫기 ✕</span><img id="lbimg" src="" alt="ERD 확대"></div>
+
+<script>
+  function openLB(src){const lb=document.getElementById('lb');document.getElementById('lbimg').src=src;lb.classList.add('open');document.body.style.overflow='hidden';}
+  function closeLB(){document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+</script>
 <script>
   const nav=document.getElementById('nav');
   const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>40);

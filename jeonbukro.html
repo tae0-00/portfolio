@@ -108,6 +108,36 @@
 
   footer.copy{padding:28px 0;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-soft);}
 
+  /* ERD section */
+  .erd-sec{padding:80px 0 20px;}
+  .erd-frame{border:1px solid var(--line-strong);border-radius:8px;overflow:hidden;background:#0E141A;cursor:zoom-in;position:relative;}
+  .erd-frame img{width:100%;display:block;transition:transform .3s;}
+  .erd-frame:hover img{transform:scale(1.02);}
+  .erd-frame .zoom{position:absolute;top:12px;right:14px;font-family:var(--mono);font-size:10.5px;color:var(--cream);background:rgba(20,48,42,.7);padding:4px 10px;border-radius:3px;letter-spacing:.04em;}
+  .erd-cap{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:12px;text-align:center;letter-spacing:.03em;}
+  .erd-lightbox{position:fixed;inset:0;z-index:200;background:rgba(14,20,26,.94);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out;}
+  .erd-lightbox.open{display:flex;}
+  .erd-lightbox img{max-width:100%;max-height:92vh;border-radius:6px;}
+  .erd-lightbox .lb-close{position:absolute;top:20px;right:26px;font-family:var(--mono);font-size:13px;color:var(--cream);}
+
+  /* RETRO (회고 / 문제 해결) */
+  .retro{padding:90px 0 20px;}
+  .retro-case{border:1px solid var(--line-strong);border-radius:8px;background:var(--cream);overflow:hidden;margin-bottom:20px;}
+  .rc-top{display:flex;align-items:center;gap:14px;padding:20px 26px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .rc-id{font-family:var(--mono);font-size:11px;color:var(--vermilion);letter-spacing:.05em;border:1px solid rgba(188,74,48,.3);padding:3px 9px;border-radius:3px;background:rgba(188,74,48,.06);}
+  .rc-name{font-family:var(--serif);font-size:1.2rem;font-weight:700;}
+  .rc-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+  @media(max-width:760px){.rc-grid{grid-template-columns:1fr;}}
+  .rc-col{padding:22px 26px;border-right:1px solid var(--line);}
+  .rc-col:last-child{border-right:none;}
+  @media(max-width:760px){.rc-col{border-right:none;border-bottom:1px solid var(--line);}.rc-col:last-child{border-bottom:none;}}
+  .rc-step{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .rc-step.problem{color:var(--vermilion);}.rc-step.cause{color:var(--gold);}.rc-step.fix{color:var(--teal);}
+  .rc-col p{font-size:.92rem;color:var(--ink-soft);line-height:1.65;}
+  .rc-col p b{color:var(--ink);font-weight:700;}
+  .rc-foot{padding:14px 26px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:7px;background:var(--paper-2);}
+  .rc-foot .tg{font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--line-strong);border-radius:2px;color:var(--ink);background:rgba(255,255,255,.3);}
+
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
   @media(prefers-reduced-motion:reduce){.reveal{transition:none;opacity:1;transform:none;}}
@@ -372,6 +402,65 @@
 
   </div>
 
+  <!-- ERD -->
+  <div class="container">
+    <section class="erd-sec">
+      <div class="group-head reveal">
+        <span class="group-num">DB</span>
+        <h2 class="group-title">데이터 구조 (ERD)</h2>
+        <span class="group-sub">// SCHEMA</span>
+      </div>
+      <div class="group-rule reveal"></div>
+      <div class="erd-frame reveal" onclick="openLB('erd-jeonbukro.png')">
+        <span class="zoom">클릭하면 확대 ⤢</span>
+        <img src="erd-jeonbukro.png" alt="전북로 ERD" onerror="this.parentElement.style.display='none'">
+      </div>
+      <p class="erd-cap reveal">회원 · 여행지 · 역사 코스 · 리뷰 · 신고 · 플래너 등으로 구성된 전북로 전체 스키마</p>
+    </section>
+  </div>
+
+  <!-- RETRO / 문제 해결 -->
+  <div class="container">
+    <section id="retro" class="retro">
+      <div class="group-head reveal">
+        <span class="group-num">★</span>
+        <h2 class="group-title">문제 해결 기록</h2>
+        <span class="group-sub">// 문제 → 원인 → 해결</span>
+      </div>
+      <div class="group-rule reveal"></div>
+
+      <article class="retro-case reveal">
+        <div class="rc-top"><span class="rc-id">CASE 01</span><span class="rc-name">찜 상태 표시 불안정 — Race Condition 해결</span></div>
+        <div class="rc-grid">
+          <div class="rc-col"><div class="rc-step problem">● 문제</div><p>여행지 목록에서 찜한 하트가 <b>새로고침·뒤로가기 때마다 사라졌다 나타났다</b> 하며 불안정했습니다. 백엔드와 상세 페이지는 정상이었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step cause">▲ 원인</div><p>JWT 파싱이 끝나기 전에 목록 API가 먼저 호출돼 <b>userId가 null인 채로 요청</b>됐고, 서버가 "찜 없음"으로 응답했습니다. userId 비동기 초기화 타이밍으로 인한 <b>Race Condition</b>이었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step fix">✓ 해결</div><p>userId가 확정되기 전에는 목록 조회를 막고, 비로그인 사용자도 확정 fetch가 돌도록 처리해 <b>항상 정확한 찜 상태</b>가 렌더되게 했습니다.</p></div>
+        </div>
+        <div class="rc-foot"><span class="tg">Race Condition</span><span class="tg">비동기 초기화</span><span class="tg">useEffect 의존성</span><span class="tg">JWT</span></div>
+      </article>
+
+      <article class="retro-case reveal">
+        <div class="rc-top"><span class="rc-id">CASE 02</span><span class="rc-name">외부 API 장애 대비 — Haversine 폴백</span></div>
+        <div class="rc-grid">
+          <div class="rc-col"><div class="rc-step problem">● 문제</div><p>역사 코스의 동선 계산을 외부 지도 API에 의존하다 보니, <b>API 장애 시 동선 정보가 통째로 끊길</b> 위험이 있었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step cause">▲ 원인</div><p>정상 응답만 가정한 설계라, <b>외부 의존성의 실패 경로</b>가 비어 있었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step fix">✓ 해결</div><p>호출 실패 시 두 좌표의 직선거리를 직접 계산하는 <b>Haversine 폴백</b>을 넣어, API가 불안정해도 동선이 끊기지 않게 했습니다.</p></div>
+        </div>
+        <div class="rc-foot"><span class="tg">Kakao Directions</span><span class="tg">Haversine</span><span class="tg">Fallback 설계</span><span class="tg">장애 대비</span></div>
+      </article>
+
+      <article class="retro-case reveal">
+        <div class="rc-top"><span class="rc-id">CASE 03</span><span class="rc-name">방문자 중복 집계 방지 — 메모리 관리</span></div>
+        <div class="rc-grid">
+          <div class="rc-col"><div class="rc-step problem">● 문제</div><p>같은 사용자가 여러 번 접속하면 방문자 수가 부풀려져, 관리자 지표를 신뢰할 수 없었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step cause">▲ 원인</div><p>방문 이벤트를 단순 누적만 하고, <b>같은 사용자를 식별·중복 제거</b>하는 구조가 없었습니다.</p></div>
+          <div class="rc-col"><div class="rc-step fix">✓ 해결</div><p>날짜별 Set에 회원 ID·IP 식별자를 저장해 중복을 제거하고, <b>지난 날짜 데이터는 자동 제거</b>해 메모리가 쌓이지 않게 했습니다.</p></div>
+        </div>
+        <div class="rc-foot"><span class="tg">ConcurrentHashMap</span><span class="tg">Set 중복 제거</span><span class="tg">메모리 관리</span></div>
+      </article>
+    </section>
+  </div>
+
   <!-- FOOTER NAV -->
   <section class="pfoot">
     <svg class="contour" viewBox="0 0 400 400" fill="none" aria-hidden="true">
@@ -390,6 +479,13 @@
 
 </div>
 
+<div class="erd-lightbox" id="lb" onclick="closeLB()"><span class="lb-close mono">닫기 ✕</span><img id="lbimg" src="" alt="ERD 확대"></div>
+
+<script>
+  function openLB(src){const lb=document.getElementById('lb');document.getElementById('lbimg').src=src;lb.classList.add('open');document.body.style.overflow='hidden';}
+  function closeLB(){document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+</script>
 <script>
   const nav=document.getElementById('nav');
   const onScroll=()=>nav.classList.toggle('scrolled',window.scrollY>40);
